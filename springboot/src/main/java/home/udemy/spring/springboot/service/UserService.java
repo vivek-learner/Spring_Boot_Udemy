@@ -23,4 +23,13 @@ public class UserService implements IUserService {
 		return users;
 	}
 
+	@Override
+	public User getUser(int id) {
+		for(User user : users) {
+			if(id == user.getId()) {
+				return user;
+			}
+		}
+		return null;
+	}
 }
