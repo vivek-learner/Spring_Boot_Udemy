@@ -1,4 +1,4 @@
-package home.udemy.spring.springboot;
+package home.udemy.spring.springboot.config;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
