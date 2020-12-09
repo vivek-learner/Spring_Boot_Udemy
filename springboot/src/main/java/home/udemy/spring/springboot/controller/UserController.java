@@ -1,8 +1,13 @@
 package home.udemy.spring.springboot.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,17 +24,21 @@ public class UserController {
 	private IUserService iUserService;
 	
 	@GetMapping("/getUsers")
-	private List<User> getUsers() {
+	protected List<User> getUsers() {
 		return iUserService.getUsers();
 	}
 	
 	@GetMapping("/getUser/{id}")
-	private User getUser(@PathVariable int id) throws UserNotFoundException {
+	private EntityModel<User> getUser(@PathVariable int id) throws UserNotFoundException {
+		
 		User user = iUserService.getUser(id);
-		if(null != user) {
-			return user;
-		}else {
+		if(null == user) {
 			throw new UserNotFoundException("User Not Found for id "+id);
-		} 
+		}
+		
+		EntityModel<User> resource = EntityModel.of(user);
+		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getUsers());
+		resource.add(linkTo.withRel("all-users"));
+		return resource;
 	}
 }
