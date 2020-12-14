@@ -2,23 +2,16 @@ package home.udemy.spring.springboot.pojo;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
-public class User {
+@JsonFilter("UserFilter")
+public class UserFilter {
 	
 	private int id;
 	private String name;
 	private Date dob;
 	
-	@JsonIgnore
-	private String passport;
-	
-	
-	public User() {
-		
-	}
-	
-	public User(int id, String name, Date dob) {
+	public UserFilter(int id, String name, Date dob) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,21 +33,12 @@ public class User {
 	public Date getDob() {
 		return dob;
 	}
-	public String getPassport() {
-		return passport;
-	}
-
-	public void setPassport(String passport) {
-		this.passport = passport;
-	}
-
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", dob=" + dob + ", passport=" + passport + "]";
+		return "UserFilter [id=" + id + ", name=" + name + ", dob=" + dob + "]";
 	}
 	
 }
