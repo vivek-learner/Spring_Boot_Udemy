@@ -1,18 +1,26 @@
 package home.udemy.spring.springboot.pojo;
 
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
 public class User {
 	
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	private Date dob;
-	
-	@JsonIgnore
-	private String passport;
-	
+		
+	@OneToMany(mappedBy="user")
+	private List<Post> post;
 	
 	public User() {
 		
@@ -40,21 +48,18 @@ public class User {
 	public Date getDob() {
 		return dob;
 	}
-	public String getPassport() {
-		return passport;
-	}
-
-	public void setPassport(String passport) {
-		this.passport = passport;
-	}
-
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
-
+	public List<Post> getPost() {
+		return post;
+	}
+	public void setPost(List<Post> post) {
+		this.post = post;
+	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", dob=" + dob + ", passport=" + passport + "]";
+		return "User [id=" + id + ", name=" + name + ", dob=" + dob + "]";
 	}
 	
 }
